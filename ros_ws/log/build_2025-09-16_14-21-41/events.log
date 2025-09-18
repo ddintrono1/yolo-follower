@@ -1,0 +1,230 @@
+[0.000000] (-) TimerEvent: {}
+[0.000508] (-) JobUnselected: {'identifier': 'doom_interfaces'}
+[0.001008] (-) JobUnselected: {'identifier': 'dynamixel_sdk'}
+[0.001306] (-) JobUnselected: {'identifier': 'dynamixel_sdk_custom_interfaces'}
+[0.001590] (-) JobUnselected: {'identifier': 'dynamixel_sdk_examples'}
+[0.001850] (-) JobUnselected: {'identifier': 'turtlebot3'}
+[0.002109] (-) JobUnselected: {'identifier': 'turtlebot3_bringup'}
+[0.002351] (-) JobUnselected: {'identifier': 'turtlebot3_cartographer'}
+[0.002584] (-) JobUnselected: {'identifier': 'turtlebot3_description'}
+[0.002834] (-) JobUnselected: {'identifier': 'turtlebot3_example'}
+[0.003057] (-) JobUnselected: {'identifier': 'turtlebot3_fake_node'}
+[0.003275] (-) JobUnselected: {'identifier': 'turtlebot3_gazebo'}
+[0.003640] (-) JobUnselected: {'identifier': 'turtlebot3_msgs'}
+[0.003901] (-) JobUnselected: {'identifier': 'turtlebot3_navigation2'}
+[0.004109] (-) JobUnselected: {'identifier': 'turtlebot3_node'}
+[0.004511] (-) JobUnselected: {'identifier': 'turtlebot3_simulations'}
+[0.004754] (-) JobUnselected: {'identifier': 'turtlebot3_teleop'}
+[0.005002] (doom_nodes) JobQueued: {'identifier': 'doom_nodes', 'dependencies': OrderedDict({'doom_interfaces': '/root/ros_workspace/install/doom_interfaces'})}
+[0.005231] (doom_nodes) JobStarted: {'identifier': 'doom_nodes'}
+[0.098421] (-) TimerEvent: {}
+[0.198981] (-) TimerEvent: {}
+[0.299566] (-) TimerEvent: {}
+[0.400163] (-) TimerEvent: {}
+[0.500734] (-) TimerEvent: {}
+[0.601545] (-) TimerEvent: {}
+[0.703671] (-) TimerEvent: {}
+[0.805219] (-) TimerEvent: {}
+[0.905847] (-) TimerEvent: {}
+[1.006487] (-) TimerEvent: {}
+[1.107852] (-) TimerEvent: {}
+[1.209515] (-) TimerEvent: {}
+[1.313957] (-) TimerEvent: {}
+[1.414987] (-) TimerEvent: {}
+[1.516746] (-) TimerEvent: {}
+[1.618556] (-) TimerEvent: {}
+[1.720228] (-) TimerEvent: {}
+[1.822073] (-) TimerEvent: {}
+[1.924099] (-) TimerEvent: {}
+[2.026916] (-) TimerEvent: {}
+[2.128821] (-) TimerEvent: {}
+[2.229959] (-) TimerEvent: {}
+[2.331536] (-) TimerEvent: {}
+[2.433017] (-) TimerEvent: {}
+[2.534515] (-) TimerEvent: {}
+[2.636062] (-) TimerEvent: {}
+[2.737674] (-) TimerEvent: {}
+[2.839358] (-) TimerEvent: {}
+[2.940349] (-) TimerEvent: {}
+[3.042033] (-) TimerEvent: {}
+[3.143404] (-) TimerEvent: {}
+[3.244072] (-) TimerEvent: {}
+[3.345694] (-) TimerEvent: {}
+[3.446452] (-) TimerEvent: {}
+[3.547268] (-) TimerEvent: {}
+[3.648077] (-) TimerEvent: {}
+[3.749847] (-) TimerEvent: {}
+[3.850546] (-) TimerEvent: {}
+[3.951998] (-) TimerEvent: {}
+[4.052691] (-) TimerEvent: {}
+[4.154479] (-) TimerEvent: {}
+[4.255515] (-) TimerEvent: {}
+[4.356141] (-) TimerEvent: {}
+[4.457219] (-) TimerEvent: {}
+[4.566565] (-) TimerEvent: {}
+[4.667255] (-) TimerEvent: {}
+[4.768278] (-) TimerEvent: {}
+[4.869217] (-) TimerEvent: {}
+[4.970087] (-) TimerEvent: {}
+[5.071096] (-) TimerEvent: {}
+[5.171677] (-) TimerEvent: {}
+[5.272290] (-) TimerEvent: {}
+[5.372863] (-) TimerEvent: {}
+[5.473397] (-) TimerEvent: {}
+[5.574103] (-) TimerEvent: {}
+[5.675504] (-) TimerEvent: {}
+[5.776196] (-) TimerEvent: {}
+[5.877691] (-) TimerEvent: {}
+[5.979222] (-) TimerEvent: {}
+[6.079772] (-) TimerEvent: {}
+[6.180621] (-) TimerEvent: {}
+[6.281404] (-) TimerEvent: {}
+[6.383444] (-) TimerEvent: {}
+[6.484941] (-) TimerEvent: {}
+[6.586368] (-) TimerEvent: {}
+[6.687835] (-) TimerEvent: {}
+[6.789191] (-) TimerEvent: {}
+[6.890835] (-) TimerEvent: {}
+[6.992508] (-) TimerEvent: {}
+[7.093306] (-) TimerEvent: {}
+[7.194177] (-) TimerEvent: {}
+[7.295852] (-) TimerEvent: {}
+[7.397665] (-) TimerEvent: {}
+[7.499877] (-) TimerEvent: {}
+[7.601519] (-) TimerEvent: {}
+[7.702387] (-) TimerEvent: {}
+[7.804142] (-) TimerEvent: {}
+[7.905484] (-) TimerEvent: {}
+[8.007325] (-) TimerEvent: {}
+[8.108690] (-) TimerEvent: {}
+[8.210002] (-) TimerEvent: {}
+[8.311125] (-) TimerEvent: {}
+[8.411838] (-) TimerEvent: {}
+[8.512549] (-) TimerEvent: {}
+[8.614945] (-) TimerEvent: {}
+[8.716303] (-) TimerEvent: {}
+[8.817862] (-) TimerEvent: {}
+[8.918572] (-) TimerEvent: {}
+[9.020020] (-) TimerEvent: {}
+[9.121214] (-) TimerEvent: {}
+[9.222513] (-) TimerEvent: {}
+[9.323906] (-) TimerEvent: {}
+[9.424740] (-) TimerEvent: {}
+[9.525912] (-) TimerEvent: {}
+[9.627341] (-) TimerEvent: {}
+[9.728643] (-) TimerEvent: {}
+[9.830186] (-) TimerEvent: {}
+[9.931199] (-) TimerEvent: {}
+[10.032042] (-) TimerEvent: {}
+[10.133410] (-) TimerEvent: {}
+[10.234695] (-) TimerEvent: {}
+[10.336145] (-) TimerEvent: {}
+[10.436961] (-) TimerEvent: {}
+[10.538374] (-) TimerEvent: {}
+[10.642478] (-) TimerEvent: {}
+[10.719858] (doom_nodes) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/root/ros_workspace/build/doom_nodes/build', '--no-deps', 'symlink_data'], 'cwd': '/root/ros_workspace/build/doom_nodes', 'env': {'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'HOSTNAME': '9466b03e0779', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/root/ros_workspace/install/doom_interfaces/lib:/root/ros_workspace/install/turtlebot3_msgs/lib:/root/ros_workspace/install/dynamixel_sdk_custom_interfaces/lib:/root/ros_workspace/install/dynamixel_sdk/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/root', 'OLDPWD': '/root', 'ROS_PYTHON_VERSION': '3', 'COLCON_PREFIX_PATH': '/root/ros_workspace/install', 'ROS_DISTRO': 'jazzy', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'TERM': 'xterm', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'DISPLAY': ':0', 'LANG': 'C.UTF-8', 'XAUTHORITY': '', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'AMENT_PREFIX_PATH': '/root/ros_workspace/install/turtlebot3:/root/ros_workspace/install/turtlebot3_teleop:/root/ros_workspace/install/turtlebot3_simulations:/root/ros_workspace/install/turtlebot3_bringup:/root/ros_workspace/install/turtlebot3_node:/root/ros_workspace/install/turtlebot3_navigation2:/root/ros_workspace/install/turtlebot3_fake_node:/root/ros_workspace/install/turtlebot3_example:/root/ros_workspace/install/turtlebot3_msgs:/root/ros_workspace/install/turtlebot3_gazebo:/root/ros_workspace/install/turtlebot3_description:/root/ros_workspace/install/turtlebot3_cartographer:/root/ros_workspace/install/dynamixel_sdk_examples:/root/ros_workspace/install/dynamixel_sdk_custom_interfaces:/root/ros_workspace/install/dynamixel_sdk:/root/ros_workspace/install/doom_nodes:/root/ros_workspace/install/doom_interfaces:/opt/ros/jazzy', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'PWD': '/root/ros_workspace/build/doom_nodes', 'TURTLEBOT3_MODEL': 'waffle', 'LC_ALL': 'C.UTF-8', 'PYTHONPATH': '/root/ros_workspace/build/doom_nodes/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/root/ros_workspace/install/doom_nodes/lib/python3.12/site-packages:/root/ros_workspace/install/doom_interfaces/lib/python3.12/site-packages:/root/ros_workspace/build/turtlebot3_teleop:/root/ros_workspace/install/turtlebot3_teleop/lib/python3.12/site-packages:/root/ros_workspace/build/turtlebot3_example:/root/ros_workspace/install/turtlebot3_example/lib/python3.12/site-packages:/root/ros_workspace/install/turtlebot3_msgs/lib/python3.12/site-packages:/root/ros_workspace/install/dynamixel_sdk_custom_interfaces/lib/python3.12/site-packages:/root/ros_workspace/install/dynamixel_sdk/lib/python3.12/site-packages:/root/ros_workspace/build/doom_nodes:/root/ros_workspace/install/doom_nodes/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'NVIDIA_VISIBLE_DEVICES': 'all', 'COLCON': '1', 'CMAKE_PREFIX_PATH': '/root/ros_workspace/install/doom_interfaces:/root/ros_workspace/install/turtlebot3:/root/ros_workspace/install/turtlebot3_simulations:/root/ros_workspace/install/turtlebot3_bringup:/root/ros_workspace/install/turtlebot3_node:/root/ros_workspace/install/turtlebot3_navigation2:/root/ros_workspace/install/turtlebot3_fake_node:/root/ros_workspace/install/turtlebot3_msgs:/root/ros_workspace/install/turtlebot3_gazebo:/root/ros_workspace/install/turtlebot3_description:/root/ros_workspace/install/turtlebot3_cartographer:/root/ros_workspace/install/dynamixel_sdk_examples:/root/ros_workspace/install/dynamixel_sdk_custom_interfaces:/root/ros_workspace/install/dynamixel_sdk:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}, 'shell': False}
+[10.742622] (-) TimerEvent: {}
+[10.843261] (-) TimerEvent: {}
+[10.943881] (-) TimerEvent: {}
+[11.044479] (-) TimerEvent: {}
+[11.145185] (-) TimerEvent: {}
+[11.245835] (-) TimerEvent: {}
+[11.346369] (-) TimerEvent: {}
+[11.447097] (-) TimerEvent: {}
+[11.547963] (-) TimerEvent: {}
+[11.649588] (-) TimerEvent: {}
+[11.750634] (-) TimerEvent: {}
+[11.851687] (-) TimerEvent: {}
+[11.952284] (-) TimerEvent: {}
+[12.053001] (-) TimerEvent: {}
+[12.155453] (-) TimerEvent: {}
+[12.257591] (-) TimerEvent: {}
+[12.358343] (-) TimerEvent: {}
+[12.461970] (-) TimerEvent: {}
+[12.562554] (-) TimerEvent: {}
+[12.663724] (-) TimerEvent: {}
+[12.771456] (-) TimerEvent: {}
+[12.872011] (-) TimerEvent: {}
+[12.972610] (-) TimerEvent: {}
+[13.073177] (-) TimerEvent: {}
+[13.173820] (-) TimerEvent: {}
+[13.274420] (-) TimerEvent: {}
+[13.375077] (-) TimerEvent: {}
+[13.476825] (-) TimerEvent: {}
+[13.678314] (-) TimerEvent: {}
+[13.779686] (-) TimerEvent: {}
+[13.881072] (-) TimerEvent: {}
+[13.981895] (-) TimerEvent: {}
+[14.082509] (-) TimerEvent: {}
+[14.183141] (-) TimerEvent: {}
+[14.283680] (-) TimerEvent: {}
+[14.384330] (-) TimerEvent: {}
+[14.484873] (-) TimerEvent: {}
+[14.585393] (-) TimerEvent: {}
+[14.686154] (-) TimerEvent: {}
+[14.787215] (-) TimerEvent: {}
+[14.889014] (-) TimerEvent: {}
+[14.990489] (-) TimerEvent: {}
+[15.091107] (-) TimerEvent: {}
+[15.191755] (-) TimerEvent: {}
+[15.292563] (-) TimerEvent: {}
+[15.393321] (-) TimerEvent: {}
+[15.494049] (-) TimerEvent: {}
+[15.594705] (-) TimerEvent: {}
+[15.695373] (-) TimerEvent: {}
+[15.796024] (-) TimerEvent: {}
+[15.896709] (-) TimerEvent: {}
+[15.997368] (-) TimerEvent: {}
+[16.003198] (doom_nodes) StdoutLine: {'line': b'running develop\n'}
+[16.097513] (-) TimerEvent: {}
+[16.198343] (-) TimerEvent: {}
+[16.298888] (-) TimerEvent: {}
+[16.399566] (-) TimerEvent: {}
+[16.500315] (-) TimerEvent: {}
+[16.600914] (-) TimerEvent: {}
+[16.701599] (-) TimerEvent: {}
+[16.802582] (-) TimerEvent: {}
+[16.903698] (-) TimerEvent: {}
+[17.004263] (-) TimerEvent: {}
+[17.104861] (-) TimerEvent: {}
+[17.205532] (-) TimerEvent: {}
+[17.306212] (-) TimerEvent: {}
+[17.406776] (-) TimerEvent: {}
+[17.507275] (-) TimerEvent: {}
+[17.516382] (doom_nodes) StdoutLine: {'line': b'running egg_info\n'}
+[17.580076] (doom_nodes) StdoutLine: {'line': b'writing doom_nodes.egg-info/PKG-INFO\n'}
+[17.586871] (doom_nodes) StdoutLine: {'line': b'writing dependency_links to doom_nodes.egg-info/dependency_links.txt\n'}
+[17.592693] (doom_nodes) StdoutLine: {'line': b'writing entry points to doom_nodes.egg-info/entry_points.txt\n'}
+[17.597116] (doom_nodes) StdoutLine: {'line': b'writing requirements to doom_nodes.egg-info/requires.txt\n'}
+[17.607405] (-) TimerEvent: {}
+[17.608096] (doom_nodes) StdoutLine: {'line': b'writing top-level names to doom_nodes.egg-info/top_level.txt\n'}
+[17.707524] (-) TimerEvent: {}
+[17.801370] (doom_nodes) StdoutLine: {'line': b"reading manifest file 'doom_nodes.egg-info/SOURCES.txt'\n"}
+[17.807712] (-) TimerEvent: {}
+[17.908461] (-) TimerEvent: {}
+[17.936619] (doom_nodes) StdoutLine: {'line': b"writing manifest file 'doom_nodes.egg-info/SOURCES.txt'\n"}
+[18.008586] (-) TimerEvent: {}
+[18.065754] (doom_nodes) StdoutLine: {'line': b'running build_ext\n'}
+[18.077254] (doom_nodes) StdoutLine: {'line': b'Creating /root/ros_workspace/install/doom_nodes/lib/python3.12/site-packages/doom-nodes.egg-link (link to .)\n'}
+[18.105108] (doom_nodes) StdoutLine: {'line': b'Installing localizer script to /root/ros_workspace/install/doom_nodes/lib/doom_nodes\n'}
+[18.108689] (-) TimerEvent: {}
+[18.131276] (doom_nodes) StdoutLine: {'line': b'Installing navigator script to /root/ros_workspace/install/doom_nodes/lib/doom_nodes\n'}
+[18.167378] (doom_nodes) StdoutLine: {'line': b'Installing perceptor script to /root/ros_workspace/install/doom_nodes/lib/doom_nodes\n'}
+[18.208866] (doom_nodes) StdoutLine: {'line': b'\n'}
+[18.211281] (-) TimerEvent: {}
+[18.211826] (doom_nodes) StdoutLine: {'line': b'Installed /root/ros_workspace/build/doom_nodes\n'}
+[18.220025] (doom_nodes) StdoutLine: {'line': b'running symlink_data\n'}
+[18.311566] (-) TimerEvent: {}
+[18.412743] (-) TimerEvent: {}
+[18.517114] (-) TimerEvent: {}
+[18.618090] (-) TimerEvent: {}
+[18.622152] (doom_nodes) CommandEnded: {'returncode': 0}
+[18.718258] (-) TimerEvent: {}
+[18.819133] (-) TimerEvent: {}
+[18.919806] (-) TimerEvent: {}
+[19.020503] (-) TimerEvent: {}
+[19.121165] (-) TimerEvent: {}
+[19.222253] (-) TimerEvent: {}
+[19.323313] (-) TimerEvent: {}
+[19.377540] (doom_nodes) JobEnded: {'identifier': 'doom_nodes', 'rc': 0}
+[19.399453] (-) EventReactorShutdown: {}

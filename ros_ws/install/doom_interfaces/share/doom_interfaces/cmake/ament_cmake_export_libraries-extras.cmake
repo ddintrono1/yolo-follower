@@ -1,0 +1,1 @@
+/root/ros_workspace/build/doom_interfaces/ament_cmake_export_libraries/ament_cmake_export_libraries-extras.cmake

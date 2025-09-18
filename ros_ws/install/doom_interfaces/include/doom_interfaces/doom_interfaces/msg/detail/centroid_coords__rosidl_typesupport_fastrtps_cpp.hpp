@@ -1,0 +1,1 @@
+/root/ros_workspace/build/doom_interfaces/rosidl_typesupport_fastrtps_cpp/doom_interfaces/msg/detail/centroid_coords__rosidl_typesupport_fastrtps_cpp.hpp

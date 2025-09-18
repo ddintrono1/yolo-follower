@@ -1,0 +1,20 @@
+FROM ros:jazzy
+RUN apt update -y && apt install ros-jazzy-turtlesim* -y
+RUN apt update -y && apt install -y ros-jazzy-rqt-graph
+RUN apt update -y && apt install -y wget
+RUN apt update -y && apt install -y ros-jazzy-urdf-tutorial
+RUN apt update -y && apt install -y liburdfdom-tools
+# install gazebo
+RUN apt update -y && apt install -y ros-jazzy-ros-gz
+# install navigation stuff
+RUN apt update -y && apt install -y ros-jazzy-navigation2 \
+ ros-jazzy-nav2-bringup ros-jazzy-cartographer \
+  ros-jazzy-cartographer-ros
+
+WORKDIR /root/ros_workspace
+RUN sudo apt install python3-colcon-common-extensions
+RUN sudo apt install ros-jazzy-test-msgs
+
+RUN apt update -y && apt install -y python3-pip
+RUN pip install --break-system-packages --no-deps ultralytics \
+ && pip install --break-system-packages torch torchvision torchaudio tqdm requests --index-url https://download.pytorch.org/whl/cu121

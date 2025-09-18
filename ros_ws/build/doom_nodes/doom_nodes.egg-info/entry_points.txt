@@ -1,0 +1,4 @@
+[console_scripts]
+localizer = doom_nodes.localization_node:main
+navigator = doom_nodes.navigation_node:main
+perceptor = doom_nodes.perception_node:main

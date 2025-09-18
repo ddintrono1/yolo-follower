@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/root/ros_workspace/build/doom_interfaces/rosidl_generator_py/doom_interfaces/doom_interfaces_s__rosidl_typesupport_c.so" "TARGETS" "doom_interfaces_s__rosidl_typesupport_c" "DESTINATION" "lib/python3.12/site-packages/doom_interfaces")

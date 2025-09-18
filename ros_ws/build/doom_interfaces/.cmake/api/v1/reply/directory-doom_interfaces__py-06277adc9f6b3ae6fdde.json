@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "doom_interfaces__py",
+		"source" : "/root/ros_workspace/build/doom_interfaces/doom_interfaces__py"
+	}
+}

@@ -1,0 +1,6 @@
+{
+  "package_name": "doom_interfaces",
+  "non_idl_tuples": [
+    "/root/ros_workspace/src/doom_interfaces:msg/CentroidCoords.msg"
+  ]
+}
