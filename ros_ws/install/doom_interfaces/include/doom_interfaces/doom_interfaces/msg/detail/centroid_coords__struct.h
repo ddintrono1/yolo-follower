@@ -1,1 +1,0 @@
-/root/ros_workspace/build/doom_interfaces/rosidl_generator_c/doom_interfaces/msg/detail/centroid_coords__struct.h

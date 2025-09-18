@@ -1,1 +1,0 @@
-/root/ros_workspace/build/doom_nodes/launch/doom_project.launch.py

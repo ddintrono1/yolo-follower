@@ -1,1 +1,0 @@
-/root/ros_workspace/src/doom_nodes/setup.py

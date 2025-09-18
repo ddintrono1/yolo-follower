@@ -1,1 +1,0 @@
-/root/ros_workspace/build/doom_interfaces/rosidl_cmake/rosidl_cmake-extras.cmake
