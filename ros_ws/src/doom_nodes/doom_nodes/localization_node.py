@@ -23,7 +23,7 @@ class Localizer(Node):
         ats = ApproximateTimeSynchronizer(
             [self.sub_centroid, self.sub_depth],
             queue_size=10,
-            slop=5
+            slop=0.1
         )
         ats.registerCallback(self.localize)
 
@@ -56,7 +56,7 @@ class Localizer(Node):
         msg.point.x = float(x)
         msg.point.y = float(y)
         msg.point.z = float(z)
-        msg.header = msg_depth.header
+        msg.header = msg_depth.header ## mod: try with msg_depth header
 
         self.publisher_.publish(msg)
         

@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from rclpy.time import Time
+from rclpy.duration import Duration
 from rclpy.action import ActionClient
 
 import math
@@ -48,8 +49,7 @@ class Navigator(Node):
         point_camera = msg
 
         try:
-            self.person_global = self.tf_buffer.transform(point_camera, self.target_frame)
-                        
+            self.person_global = self.tf_buffer.transform(point_camera, self.target_frame)                     
         except TransformException as ex:
             self.get_logger().info(
                 f'Could not transform {self.source_frame} to {self.target_frame}: {ex}')
@@ -66,10 +66,10 @@ class Navigator(Node):
 
         self.already_triggered_flag = True  # debug
 
+        self.get_logger().info(f"already_triggered_flag is now TRUE")
+
         robot_position_global = self.get_robot_position('map')
         goal_pose_global = self.compute_pose(robot_position_global, self.person_global)
-
-        # the pose will now be used to feed nav2 action
 
         self.send_goal(goal_pose_global)
 
@@ -106,7 +106,7 @@ class Navigator(Node):
         t = self.tf_buffer.lookup_transform(source, 'base_link', Time())
         robot_position.point.x = t.transform.translation.x
         robot_position.point.y = t.transform.translation.y
-        robot_position.point.z = t.transform.translation.z
+        robot_position.point.z = t.transform.translation.z #prova
 
         return robot_position
 
