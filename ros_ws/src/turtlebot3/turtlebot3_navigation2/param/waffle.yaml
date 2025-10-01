@@ -436,7 +436,16 @@ velocity_smoother:
 lifecycle_manager_navigation:
   ros__parameters:
     autostart: true
-    bond_timeout: 15.0   
+    bond_timeout: 15.0
+    node_names: ['controller_server', 'planner_server', 'behavior_server', 'bt_navigator', 'waypoint_follower']
+
+lifecycle_manager_localization:
+  ros__parameters:
+    autostart: true
+    bond_timeout: 15.0
+    node_names: ['amcl']
+
+
 # MOD end
 
 
