@@ -22,14 +22,14 @@ def generate_launch_description():
         Node(
             package='doom_nodes',
             executable='perceptor',
-            name='perception_node',
+            name='perceptor',
             output='screen',
             parameters=[{'use_sim_time': True}]
         ),
         Node(
             package='doom_nodes',
             executable='localizer',
-            name='localization_node',
+            name='localizer',
             output='screen',
             parameters=[{'use_sim_time': True}]
         )
