@@ -1,4 +1,3 @@
-
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import IncludeLaunchDescription
@@ -23,14 +22,34 @@ def generate_launch_description():
             package='doom_nodes',
             executable='perceptor',
             name='perceptor',
-            output='screen',
+            output='log',
             parameters=[{'use_sim_time': True}]
         ),
         Node(
             package='doom_nodes',
             executable='localizer',
             name='localizer',
+            output='log',
+            parameters=[{'use_sim_time': True}]
+        ),
+        Node(
+            package='doom_nodes',
+            executable='initial_state_publisher',
+            name='initial_state_publisher',
             output='screen',
             parameters=[{'use_sim_time': True}]
+        ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join( 
+                    get_package_share_directory('turtlebot3_navigation2'),
+                    'launch',
+                    'navigation2.launch.py'
+                )
+            ),
+            launch_arguments={
+                'use_sim_time': 'true',
+                'map': 'saved_maps/hexa_world.yaml'
+            }.items()
         )
     ])

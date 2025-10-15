@@ -27,6 +27,10 @@ class Navigator(Node):
         self.source_frame = 'camera_rgb_frame'
         self.target_frame = 'map'
 
+        self.person_global = None
+        self.goal_in_progress = False
+        self.current_goal_handle = None
+
         self.subscriber_ = self.create_subscription(
             PointStamped,
             '/target_position_camera',
@@ -34,11 +38,9 @@ class Navigator(Node):
             10
         )
 
-        self.already_triggered_flag = False         # debug
-
         self._action_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
         
-        #self.timer = self.create_timer(1.0, self.navigate)          # debug
+        self.timer = self.create_timer(2.0, self.navigate)
 
         self.get_logger().info(f"Navigator node ready \n")         
              
@@ -54,25 +56,25 @@ class Navigator(Node):
             self.get_logger().info(
                 f'Could not transform {self.source_frame} to {self.target_frame}: {ex}')
             return
-        self.navigate()
 
     def navigate(self):
 
-        if not hasattr(self, 'person_global'):
+        if self.person_global is None:
             return
-
-        if self.already_triggered_flag:     # debug
-            return
-
-        self.already_triggered_flag = True  # debug
-
-        self.get_logger().info(f"already_triggered_flag is now TRUE")
 
         robot_position_global = self.get_robot_position('map')
         goal_pose_global = self.compute_pose(robot_position_global, self.person_global)
 
-        self.send_goal(goal_pose_global)
-
+        if self.goal_in_progress:
+            # Cancel the previous goal
+            self.get_logger().info("Cancelling previous goal...")
+            cancel_future = self.current_goal_handle.cancel_goal_async()
+            # anonymous function needed
+            cancel_future.add_done_callback(
+                lambda future: self.send_goal(goal_pose_global)
+            )
+        else:
+            self.send_goal(goal_pose_global)
 
     def send_goal(self, goal_pose):
         goal_msg = NavigateToPose.Goal()
@@ -89,8 +91,14 @@ class Navigator(Node):
         goal_handle = future.result()
         if not goal_handle.accepted:
             self.get_logger().warn('Goal rejected')
+            self.goal_in_progress = False
+            self.current_goal_handle = None
             return
+
         self.get_logger().info('Goal accepted')
+
+        self.goal_in_progress = True
+        self.current_goal_handle = goal_handle
 
         self._get_result_future = goal_handle.get_result_async()
         self._get_result_future.add_done_callback(self.get_result_callback)
@@ -98,6 +106,8 @@ class Navigator(Node):
     def get_result_callback(self, future):
         result = future.result().result
         self.get_logger().info(f'Navigation finished with result: {result}')
+        self.goal_in_progress = False
+        self.current_goal_handle = None
 
     def get_robot_position(self, source):
         # this function retrieves the robot position wrt a specified source frame
@@ -106,7 +116,7 @@ class Navigator(Node):
         t = self.tf_buffer.lookup_transform(source, 'base_link', Time())
         robot_position.point.x = t.transform.translation.x
         robot_position.point.y = t.transform.translation.y
-        robot_position.point.z = t.transform.translation.z #prova
+        robot_position.point.z = t.transform.translation.z 
 
         return robot_position
 

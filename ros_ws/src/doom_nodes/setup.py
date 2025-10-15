@@ -26,7 +26,8 @@ setup(
         'console_scripts': [
             'perceptor = doom_nodes.perception_node:main',
             'localizer = doom_nodes.localization_node:main',
-            'navigator = doom_nodes.navigation_node:main'
+            'navigator = doom_nodes.navigation_node:main',
+            'initial_state_publisher = doom_nodes.initial_state_publishing_node:main'
         ],
     },
 )
