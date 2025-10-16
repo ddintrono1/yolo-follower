@@ -121,6 +121,7 @@ class Navigator(Node):
         return robot_position
 
     def compute_pose(self, source_position, target_position):
+    
         goal_pose = PoseStamped()
         q = Quaternion()
 
@@ -129,25 +130,17 @@ class Navigator(Node):
         target_x = target_position.point.x
         target_y = target_position.point.y
 
+        # compute yaw angle which makes the robot point to the target, instanciate quaternion
         dx = target_x - source_x
-        dy = target_y - source_y
-
-        d = math.sqrt(dx**2 + dy**2)
-        
-        scale = (d-0.5) / d
-
-        x_goal = source_x + dx * scale
-        y_goal = source_y + dy * scale    
-
+        dy = target_y - source_y 
         yaw = math.atan2(dy, dx)
-
         q.w = math.cos(yaw / 2.0)
         q.z = math.sin(yaw / 2.0)
         q.x = 0.0
         q.y = 0.0
 
-        goal_pose.pose.position.x = x_goal
-        goal_pose.pose.position.y = y_goal
+        goal_pose.pose.position.x = target_x
+        goal_pose.pose.position.y = target_y
         goal_pose.pose.position.z = 0.0
         goal_pose.pose.orientation = q
 
