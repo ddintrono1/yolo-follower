@@ -17,9 +17,6 @@ class Localizer(Node):
     def __init__(self):
         super().__init__('localizer')
 
-        #self.previous_point = None
-        #self.max_jump = 1
-
         self.sub_centroid = Subscriber(self, CentroidCoords, '/centroid_coords')
         self.sub_depth = Subscriber(self, PointCloud2, '/camera/depth/points')
 
@@ -41,33 +38,29 @@ class Localizer(Node):
 
     def localize(self, msg_centroid, msg_depth):
 
-        u_depth = msg_centroid.u
-        v_depth = msg_centroid.v
+        u = msg_centroid.u
+        v = msg_centroid.v
 
-        height = msg_depth.height
-        width = msg_depth.width
-
-        # indice lineare nella PointCloud2
-        index = v_depth * width + u_depth
-
-        # leggere tutti i punti come array
-        points = list(pc2.read_points(msg_depth, field_names=["x","y","z"]))
-
-        # estrarre il punto desiderato
-        x, y, z = points[index]
-
-        #if self.previous_point is not None:
-        #    dist = math.sqrt((x-self.previous_point.point.x)**2 + (y-self.previous_point.point.y)**2)
-        #    if dist > self.max_jump:
-        #        return
+        if u < 0 or v < 0:
+            # error centroid received: no person detected, forward the error point
+            x = 0.0
+            y = 0.0
+            z = -1.0
+        else: 
+            # valid centroid received: person detected
+            height = msg_depth.height
+            width = msg_depth.width
+            # linear indexing
+            index = v * width + u
+            points_array = pc2.read_points_numpy(msg_depth, field_names=("x", "y", "z")) # MOD
+            # extract point
+            x, y, z = points_array[index]
 
         msg = PointStamped()
         msg.point.x = float(x)
         msg.point.y = float(y)
         msg.point.z = float(z)
         msg.header = msg_depth.header
-
-        self.previous_point = msg
 
         self.publisher_.publish(msg)
         

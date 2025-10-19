@@ -40,9 +40,8 @@ class Detector(Node):
         # detect a person (class : 0) inside the camera image 
         results = self.model(cv_image, device="cuda", classes=[0], verbose=False)
 
-        # extract bounding box coordinates (check if any)
         if len(results[0].boxes) > 0:
-
+            # if the person is detected, send its bb centroid coordinates
             [x_min, y_min, x_max, y_max] = results[0].boxes.xyxy[0]
 
             # compute centroid
@@ -53,9 +52,16 @@ class Detector(Node):
             centroid = CentroidCoords()
             centroid.u = x_mean
             centroid.v = y_mean
+            centroid.header = msg.header    
+        else: 
+            # if no person is detected, publish the 'error_centroid'
+            centroid = CentroidCoords()
+            centroid.u = -1
+            centroid.v = -1
             centroid.header = msg.header
-            
-            self.publisher_.publish(centroid)
+
+        self.publisher_.publish(centroid)
+
 
 
 def main(args=None):

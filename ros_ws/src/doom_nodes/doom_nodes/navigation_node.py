@@ -36,8 +36,8 @@ class Navigator(Node):
         self.null_point.point.z = 0.0
 
         self.goal_in_progress = False       # flag to verify if one goal following is in progress
-        self.current_goal_handle = None       
-        self.stopping_distance = 0.3        
+        self.current_goal_handle = None        
+        self.stopping_distance = 0.1        
         self.cancellation_requested = False
 
         self.subscriber_ = self.create_subscription(
@@ -56,9 +56,22 @@ class Navigator(Node):
 
     def navigate(self):
 
-        # Check if the target point has already been published
+        # Check if the target point has already been published CONSIDERA EVENTUALMENTE DI INSERIRLO NEL COSTRUTTORE
         if self.point_camera is None:
             self.get_logger().info(f'Camera found no point')
+            return
+
+        # Check if the 'error point' has been received, in this case stop the robot
+        if self.point_camera.point.z == -1.0:
+            self.get_logger().warn("Target lost. Stopping robot.")
+            if self.goal_in_progress and self.current_goal_handle:
+                
+                self.current_goal_handle.cancel_goal_async()
+
+                self.goal_in_progress = False
+                self.current_goal_handle = None
+                self.cancellation_requested = False
+                
             return
 
         # Transform the target point from the robot camera frame to the global frame
@@ -71,19 +84,23 @@ class Navigator(Node):
             )
             person_global = do_transform_point(self.point_camera, t)
         except TransformException as ex:
-            self.get_logger().warn(f"lookup_transform failed: {ex}")
+            self.get_logger().warn(f"Lookup_transform failed: {ex}")
             return
         
         # Compute the new goal pose (robot position is useful to make yaw angle aim to the target)
         robot_position_global = self.get_robot_position('map')
         self.goal_pose_global = self.compute_pose(robot_position_global, person_global)
 
+        # Qui si potrebbe inserire una funzione per il controllo della distanza robot->obiettivo. Se tale distanza
+        # è inferiore di una certa soglia, allora il robot si ferma e si allinea al target usando lo yaw angle.
+        # La distanza può essere ottenuta direttamente dalla funzione compute_pose  
+
         # Reset the goal if one goal was already up, otherwise simply set the goal
         if self.goal_in_progress:
             # Cancel the previous goal
             self.get_logger().info("Cancelling previous goal...")
             cancel_future = self.current_goal_handle.cancel_goal_async()
-            # anonymous function needed
+            # Reset the goal as soon as it's cancelled
             cancel_future.add_done_callback(
                 lambda future: self.send_goal(self.goal_pose_global)
             )
@@ -123,7 +140,7 @@ class Navigator(Node):
         target_x = target_position.point.x
         target_y = target_position.point.y
 
-        # compute yaw angle which makes the robot point to the target, instanciate quaternion
+        # Compute yaw angle which makes the robot point to the target, instanciate quaternion
         dx = target_x - source_x
         dy = target_y - source_y 
         yaw = math.atan2(dy, dx)
@@ -167,9 +184,13 @@ class Navigator(Node):
             goal_msg,
             feedback_callback=self.feedback_callback
             )
+        # The following callback will be executed then the goal is forwarded to the action server
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
     def goal_response_callback(self, future):
+        '''
+        This function sets the flag and logs depending on whether or not the goal is accepted
+        '''
         goal_handle = future.result()
 
         if not goal_handle.accepted:
@@ -187,6 +208,9 @@ class Navigator(Node):
         self._get_result_future.add_done_callback(self.get_result_callback)
 
     def get_result_callback(self, future):
+        '''
+        This function sets the flag and logs depending on the navigation results
+        '''
         result = future.result().result
         self.get_logger().info(f'Navigation finished with result: {result}')
         self.goal_in_progress = False
