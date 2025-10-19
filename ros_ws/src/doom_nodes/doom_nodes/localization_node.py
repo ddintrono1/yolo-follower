@@ -9,12 +9,16 @@ from message_filters import Subscriber, ApproximateTimeSynchronizer
 import sensor_msgs_py.point_cloud2 as pc2
 
 import numpy as np
+import math 
 
 
 class Localizer(Node):
 
     def __init__(self):
         super().__init__('localizer')
+
+        #self.previous_point = None
+        #self.max_jump = 1
 
         self.sub_centroid = Subscriber(self, CentroidCoords, '/centroid_coords')
         self.sub_depth = Subscriber(self, PointCloud2, '/camera/depth/points')
@@ -52,11 +56,18 @@ class Localizer(Node):
         # estrarre il punto desiderato
         x, y, z = points[index]
 
+        #if self.previous_point is not None:
+        #    dist = math.sqrt((x-self.previous_point.point.x)**2 + (y-self.previous_point.point.y)**2)
+        #    if dist > self.max_jump:
+        #        return
+
         msg = PointStamped()
         msg.point.x = float(x)
         msg.point.y = float(y)
         msg.point.z = float(z)
-        msg.header = msg_depth.header ## mod: try with msg_depth header
+        msg.header = msg_depth.header
+
+        self.previous_point = msg
 
         self.publisher_.publish(msg)
         

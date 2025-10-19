@@ -47,7 +47,7 @@ class Detector(Node):
 
             # compute centroid
             x_mean = int((x_min + x_max) / 2)
-            y_mean = int((y_min + y_max) * 0.25)
+            y_mean = int((y_min + y_max) / 2)
 
             # publish centroid
             centroid = CentroidCoords()
