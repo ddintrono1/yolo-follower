@@ -37,8 +37,7 @@ class Navigator(Node):
 
         self.goal_in_progress = False       # flag to verify if one goal following is in progress
         self.current_goal_handle = None        
-        self.stopping_distance = 0.1        
-        self.cancellation_requested = False
+        self.stopping_distance = 0.5
 
         self.subscriber_ = self.create_subscription(
             PointStamped,
@@ -65,13 +64,9 @@ class Navigator(Node):
         if self.point_camera.point.z == -1.0:
             self.get_logger().warn("Target lost. Stopping robot.")
             if self.goal_in_progress and self.current_goal_handle:
-                
                 self.current_goal_handle.cancel_goal_async()
-
                 self.goal_in_progress = False
-                self.current_goal_handle = None
-                self.cancellation_requested = False
-                
+                self.current_goal_handle = None                
             return
 
         # Transform the target point from the robot camera frame to the global frame
@@ -89,11 +84,16 @@ class Navigator(Node):
         
         # Compute the new goal pose (robot position is useful to make yaw angle aim to the target)
         robot_position_global = self.get_robot_position('map')
-        self.goal_pose_global = self.compute_pose(robot_position_global, person_global)
+        if robot_position_global is None:
+             self.get_logger().warn("Could not get robot position, skipping navigation.")
+             return
+             
+        self.goal_pose_global, goal_distance = self.compute_pose(robot_position_global, person_global)
 
-        # Qui si potrebbe inserire una funzione per il controllo della distanza robot->obiettivo. Se tale distanza
-        # è inferiore di una certa soglia, allora il robot si ferma e si allinea al target usando lo yaw angle.
-        # La distanza può essere ottenuta direttamente dalla funzione compute_pose  
+        # If the SLD to the goal is less than a threshold, stop the robot and just rotate towards the goal
+        if goal_distance < self.stopping_distance:
+            self.get_logger().info(f'Target is close enough. Rotating the robot towards the goal.')
+            self.goal_pose_global.pose.position = robot_position_global.point
 
         # Reset the goal if one goal was already up, otherwise simply set the goal
         if self.goal_in_progress:
@@ -143,6 +143,7 @@ class Navigator(Node):
         # Compute yaw angle which makes the robot point to the target, instanciate quaternion
         dx = target_x - source_x
         dy = target_y - source_y 
+        goal_distance = math.hypot(dx, dy)
         yaw = math.atan2(dy, dx)
         q.w = math.cos(yaw / 2.0)
         q.z = math.sin(yaw / 2.0)
@@ -157,7 +158,7 @@ class Navigator(Node):
         goal_pose.header.frame_id = "map"
         goal_pose.header.stamp = self.get_clock().now().to_msg()
 
-        return goal_pose        
+        return goal_pose, goal_distance        
 
     def save_point(self, msg):
         '''
@@ -176,14 +177,9 @@ class Navigator(Node):
 
         self.get_logger().info(f'Sending goal: {goal_pose.pose.position.x}, {goal_pose.pose.position.y}')
 
-        self.cancellation_requested = False
-
         self._action_client.wait_for_server()
 
-        self._send_goal_future = self._action_client.send_goal_async(
-            goal_msg,
-            feedback_callback=self.feedback_callback
-            )
+        self._send_goal_future = self._action_client.send_goal_async(goal_msg)
         # The following callback will be executed then the goal is forwarded to the action server
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
@@ -215,21 +211,6 @@ class Navigator(Node):
         self.get_logger().info(f'Navigation finished with result: {result}')
         self.goal_in_progress = False
         self.current_goal_handle = None
-
-    def feedback_callback(self, feedback_msg):
-        feedback = feedback_msg.feedback
-        distance_remaining = feedback.distance_remaining
-
-        if distance_remaining <= 0.0:
-            return  # Ignora questo messaggio di feedback e aspetta il prossimo
-
-        if distance_remaining < self.stopping_distance and not self.cancellation_requested:
-            self.get_logger().info(
-                f'Target is close enough ({distance_remaining:.2f}m). Stopping the robot.'
-            )
-            self.cancellation_requested = True
-            if self.current_goal_handle:
-                self.current_goal_handle.cancel_goal_async()
 
 
 def main(args=None):            
