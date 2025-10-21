@@ -14,6 +14,7 @@ from tf2_ros.transform_listener import TransformListener
 from tf2_ros import TransformException
 
 from nav2_msgs.action import NavigateToPose
+from action_msgs.msg import GoalStatus
 
 
 class Navigator(Node):
@@ -37,7 +38,8 @@ class Navigator(Node):
 
         self.goal_in_progress = False       # flag to verify if one goal following is in progress
         self.current_goal_handle = None        
-        self.stopping_distance = 0.5
+        self.stopping_distance = 0.75
+        self.status = None
 
         self.subscriber_ = self.create_subscription(
             PointStamped,
@@ -55,7 +57,13 @@ class Navigator(Node):
 
     def navigate(self):
 
-        # Check if the target point has already been published CONSIDERA EVENTUALMENTE DI INSERIRLO NEL COSTRUTTORE
+        # Recreate the client if the goal has been achieved
+        #if self.status == GoalStatus.STATUS_SUCCEEDED:
+        #    self.get_logger().info('Goal finished. Resetting internal state.')
+         #   self._action_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
+
+
+        # Check if the target point has already been published
         if self.point_camera is None:
             self.get_logger().info(f'Camera found no point')
             return
@@ -101,9 +109,7 @@ class Navigator(Node):
             self.get_logger().info("Cancelling previous goal...")
             cancel_future = self.current_goal_handle.cancel_goal_async()
             # Reset the goal as soon as it's cancelled
-            cancel_future.add_done_callback(
-                lambda future: self.send_goal(self.goal_pose_global)
-            )
+            cancel_future.add_done_callback(lambda future: self.send_goal(self.goal_pose_global))
         else:
             self.send_goal(self.goal_pose_global)
             
@@ -212,6 +218,7 @@ class Navigator(Node):
         self.goal_in_progress = False
         self.current_goal_handle = None
 
+        
 
 def main(args=None):            
     rclpy.init(args=args)
