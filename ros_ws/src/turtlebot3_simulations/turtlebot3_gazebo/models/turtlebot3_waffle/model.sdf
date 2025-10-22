@@ -375,14 +375,14 @@
       <sensor name="rgb_camera" type="camera">
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <update_rate>30</update_rate>
+        <update_rate>5</update_rate>
         <topic>camera/image_raw</topic>
         <gz_frame_id>camera_rgb_frame</gz_frame_id>
         <camera name="intel_realsense_r200">
           <camera_info_topic>camera/camera_info</camera_info_topic>
-          <horizontal_fov>1.02974</horizontal_fov>
+          <horizontal_fov>1.5708</horizontal_fov>
           <image>
-            <width>640</width> <!-- MOD: before was 1920x1080-->
+            <width>640</width>
             <height>480</height>
             <format>R8G8B8</format>
           </image>
@@ -404,14 +404,14 @@
       <sensor name="camera_depth" type="depth">
         <always_on>true</always_on>
         <visualize>true</visualize>
-        <update_rate>30</update_rate>
+        <update_rate>5</update_rate>
         <topic>camera/depth/image_raw</topic>
         <gz_frame_id>camera_rgb_frame</gz_frame_id>
         <camera name="intel_realsense_r200_depth">
           <camera_info_topic>camera/depth/camera_info</camera_info_topic>
-          <horizontal_fov>1.02974</horizontal_fov>
+          <horizontal_fov>1.5708</horizontal_fov>
           <image>
-            <width>640</width>   <!-- lower resolution wrt the rgb camera -->
+            <width>640</width>
             <height>480</height>
             <format>R_FLOAT32</format>
           </image>

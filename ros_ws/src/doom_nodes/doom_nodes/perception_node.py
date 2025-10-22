@@ -13,7 +13,7 @@ class Detector(Node):
     def __init__(self):
         super().__init__('perceptor')
 
-        self.model = YOLO("yolov8n.pt")
+        self.model = YOLO("yolov8m.pt")
 
         self.bridge = CvBridge()
 

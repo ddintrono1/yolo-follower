@@ -218,6 +218,7 @@ class Navigator(Node):
         self.goal_in_progress = False
         self.current_goal_handle = None
 
+
         
 
 def main(args=None):            
