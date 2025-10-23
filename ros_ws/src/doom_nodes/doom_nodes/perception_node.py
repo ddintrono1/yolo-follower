@@ -37,7 +37,7 @@ class Detector(Node):
         # convert a sensor_msgs\Image message in a 
         cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
 
-        # detect a person (class : 0) inside the camera image 
+        # detect a person (class : 0) inside the camera image, use gpu
         results = self.model(cv_image, device="cuda", classes=[0], verbose=False)
 
         if len(results[0].boxes) > 0:
@@ -45,13 +45,13 @@ class Detector(Node):
             [x_min, y_min, x_max, y_max] = results[0].boxes.xyxy[0]
 
             # compute centroid
-            x_mean = int((x_min + x_max) / 2)
-            y_mean = int((y_min + y_max) / 2)
+            x_centroid = int((x_min + x_max) / 2)
+            y_centroid = int(y_min + (y_max-y_min) * 0.25) # top 25% to avoid the void space between the legs
 
             # publish centroid
             centroid = CentroidCoords()
-            centroid.u = x_mean
-            centroid.v = y_mean
+            centroid.u = x_centroid
+            centroid.v = y_centroid
             centroid.header = msg.header    
         else: 
             # if no person is detected, publish the 'error_centroid'

@@ -52,7 +52,7 @@ class Localizer(Node):
             width = msg_depth.width
             # linear indexing
             index = v * width + u
-            points_array = pc2.read_points_numpy(msg_depth, field_names=("x", "y", "z")) # MOD
+            points_array = pc2.read_points_numpy(msg_depth, field_names=("x", "y", "z")) 
             # extract point
             x, y, z = points_array[index]
 

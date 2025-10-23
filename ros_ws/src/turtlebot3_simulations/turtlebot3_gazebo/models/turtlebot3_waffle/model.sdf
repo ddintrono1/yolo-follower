@@ -374,8 +374,8 @@
         <!-- Rgb camera -->
       <sensor name="rgb_camera" type="camera">
         <always_on>true</always_on>
-        <visualize>true</visualize>
-        <update_rate>5</update_rate>
+        <visualize>false</visualize>
+        <update_rate>2</update_rate>
         <topic>camera/image_raw</topic>
         <gz_frame_id>camera_rgb_frame</gz_frame_id>
         <camera name="intel_realsense_r200">
@@ -390,21 +390,13 @@
             <near>0.02</near>
             <far>300</far>
           </clip>
-          <noise>
-            <type>gaussian</type>
-            <!-- Noise is sampled independently per pixel on each frame.
-                  That pixel's noise value is added to each of its color
-                  channels, which at that point lie in the range [0,1]. -->
-            <mean>0.0</mean>
-            <stddev>0.007</stddev>
-          </noise>
         </camera>
       </sensor>
         <!-- Depth camera -->
       <sensor name="camera_depth" type="depth">
         <always_on>true</always_on>
-        <visualize>true</visualize>
-        <update_rate>5</update_rate>
+        <visualize>false</visualize>
+        <update_rate>2</update_rate>
         <topic>camera/depth/image_raw</topic>
         <gz_frame_id>camera_rgb_frame</gz_frame_id>
         <camera name="intel_realsense_r200_depth">

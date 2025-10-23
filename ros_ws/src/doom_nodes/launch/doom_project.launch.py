@@ -18,6 +18,19 @@ def generate_launch_description():
             ),
             launch_arguments={'use_sim_time': 'true'}.items()
         ),
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join( 
+                    get_package_share_directory('turtlebot3_navigation2'),
+                    'launch',
+                    'navigation2.launch.py'
+                )
+            ),
+            launch_arguments={
+                'use_sim_time': 'true',
+                'map': 'saved_maps/hexa_world.yaml'
+            }.items()
+        ),
         Node(
             package='doom_nodes',
             executable='perceptor',
@@ -39,17 +52,11 @@ def generate_launch_description():
             output='screen',
             parameters=[{'use_sim_time': True}]
         ),
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join( 
-                    get_package_share_directory('turtlebot3_navigation2'),
-                    'launch',
-                    'navigation2.launch.py'
-                )
-            ),
-            launch_arguments={
-                'use_sim_time': 'true',
-                'map': 'saved_maps/hexa_world.yaml'
-            }.items()
+        Node(
+            package='doom_nodes',
+            executable='navigator',
+            name='navigator',
+            output='screen',
+            parameters=[{'use_sim_time': True}]
         )
     ])

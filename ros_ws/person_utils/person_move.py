@@ -3,7 +3,7 @@ import subprocess
 import time
 import re
 
-def animate(x, y, z, steps, rate):
+def move(x, y, z, steps, rate):
     """Moves the person model 'my_person' from the current position to the specified one (x,y,z)."""
     x_start, y_start, z_start = get_person_position()
 
@@ -49,4 +49,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    animate(args.x, args.y, args.z, args.steps, args.rate)
+    move(args.x, args.y, args.z, args.steps, args.rate)
