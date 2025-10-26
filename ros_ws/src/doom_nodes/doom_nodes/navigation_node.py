@@ -25,10 +25,12 @@ class Navigator(Node):
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
 
-        self.source_frame = 'camera_rgb_frame'
-        self.target_frame = 'map'
+        # Transform-related variables
+        self.camera_frame = 'camera_rgb_frame'
+        self.robot_frame = 'base_link'
+        self.global_frame = 'map'
         self.transform_timeout = rclpy.duration.Duration(seconds=0.5)
-        self.point_camera = None
+        self.person_position_camera = None
 
         # Null point definition, utils
         self.null_point = PointStamped()
@@ -41,8 +43,10 @@ class Navigator(Node):
         self.current_goal_handle = None
         self.current_goal = None
 
+        # Safety distance from the target
         self.stopping_distance = 0.75
 
+        # Update tolerances
         self.distance_update_threshold = 0.05
         self.yaw_update_threshold = 0.05
 
@@ -59,15 +63,14 @@ class Navigator(Node):
 
         self.get_logger().info(f"Navigator node ready \n")         
 
-
     def navigate(self):
 
         # Check if the target point has already been published
-        if self.point_camera is None:
+        if self.person_position_camera is None:
             return
 
         # Check if the 'error point' has been received, in this case stop the robot
-        if self.point_camera.point.z == -1.0:
+        if self.person_position_camera.point.z == -1.0:
             self.get_logger().warn("Target lost. Stopping robot.")
             if self.goal_in_progress and self.current_goal_handle:
                 self.current_goal_handle.cancel_goal_async()
@@ -79,26 +82,27 @@ class Navigator(Node):
         # Transform the target point from the robot camera frame to the global map frame
         try:
             t = self.tf_buffer.lookup_transform(
-                self.target_frame,
-                self.source_frame,
-                self.point_camera.header.stamp,
+                self.global_frame,
+                self.camera_frame,
+                self.person_position_camera.header.stamp,
                 timeout=self.transform_timeout
             )
-            person_global = do_transform_point(self.point_camera, t)
+            person_position = do_transform_point(self.person_position_camera, t)
         except TransformException as ex:
             return
         
-        # Compute the new goal pose
-        robot_position_global = self.get_robot_position('map')
-        if robot_position_global is None:
+        # Retrieve robot current position wrt the global map frame
+        robot_position = self.get_robot_position(self.global_frame)
+        if robot_position is None:
             self.get_logger().warn("Could not get robot position, skipping navigation.")
             return   
 
-        self.next_goal, goal_distance = self.compute_pose(robot_position_global, person_global)
+        # Compute the new goal, goal SLD distance
+        self.next_goal, goal_distance = self.compute_goal(robot_position, person_position)
 
-        # If the SLD to the goal is less than a threshold, stop the robot and just rotate towards the goal
+        # If the SLD to the goal is less than a threshold, just rotate towards the goal
         if goal_distance < self.stopping_distance:
-            self.next_goal.pose.position = robot_position_global.point
+            self.next_goal.pose.position = robot_position.point
 
         # Reset the goal if one goal was already up, otherwise simply set the goal
         if self.goal_in_progress:
@@ -140,48 +144,47 @@ class Navigator(Node):
 
     def get_robot_position(self, source_frame):
         '''
-        This function retrieves the robot position wrt a specified source frame
+        This function retrieves the robot position wrt a specified frame
         '''
-        self.null_point.header.frame_id = 'base_link'
-        self.null_point.header.stamp = Time().to_msg()
-
         try:
             t = self.tf_buffer.lookup_transform(
                 source_frame,
-                'base_link',
+                self.robot_frame,
                 Time(),
                 self.transform_timeout
             )
+            # The transform uses the null point since the robot in its own frame is located of course in 
+            # the null coordinates 
+            self.null_point.header.frame_id = self.robot_frame
+            self.null_point.header.stamp = Time().to_msg()
             robot_position = do_transform_point(self.null_point, t)
             return robot_position
         except TransformException as ex:
             return
 
-    def compute_pose(self, robot_position, target_position):
+    def compute_goal(self, robot_position, target_position):
         '''
         This function computes the goal pose and the distance based on the robot starting position
         and target position
         '''
-        goal_pose = PoseStamped()
-
         robot_x = robot_position.point.x
         robot_y = robot_position.point.y
         target_x = target_position.point.x
         target_y = target_position.point.y
-
         dx = target_x - robot_x
         dy = target_y - robot_y 
+
         goal_distance = math.hypot(dx, dy)
 
         yaw = math.atan2(dy, dx)
         q = self.yaw_to_quaternion(yaw)
 
+        goal_pose = PoseStamped()
         goal_pose.pose.position.x = target_x
         goal_pose.pose.position.y = target_y
         goal_pose.pose.position.z = 0.0
         goal_pose.pose.orientation = q
-
-        goal_pose.header.frame_id = "map"
+        goal_pose.header.frame_id = self.global_frame
         goal_pose.header.stamp = self.get_clock().now().to_msg()
 
         return goal_pose, goal_distance        
@@ -190,21 +193,22 @@ class Navigator(Node):
         '''
         This function saves the received target point. It's the subscriber callback
         '''
-        self.point_camera = msg
+        self.person_position_camera = msg
 
     def goal_canceled_callback(self, future):
         '''
         This function is called as soon as the goal is canceled, sending the new goal
         '''
+        # If the goal has been successfully canceled, send the new_goal and reset the state,
+        # otherwise simply reset the state 
         try:
-            # If the goal has been successfully canceled, send the new_goal, reset the state
+            
             cancel_response = future.result()
             self.goal_in_progress = False
             self.current_goal_handle = None
             self.current_goal = None
             self.send_goal(self.next_goal)
         except:
-            # Otherwise, simply reset the state
             self.goal_in_progress = False
             self.current_goal_handle = None
             self.current_goal = None
@@ -221,8 +225,10 @@ class Navigator(Node):
 
         self._action_client.wait_for_server()
 
+        # Asynchronously send goal 
         self._send_goal_future = self._action_client.send_goal_async(goal_msg)
-        # The following callback will be executed then the goal is forwarded to the action server
+
+        # Add callback to be executed when the goal request has been served
         self._send_goal_future.add_done_callback(self.goal_response_callback)
 
     def goal_response_callback(self, future):
@@ -231,6 +237,7 @@ class Navigator(Node):
         '''
         goal_handle = future.result()
 
+        # If the goal has not been accepted, log and reset the internal state
         if not goal_handle.accepted:
             self.get_logger().warn('Goal rejected')
             self.goal_in_progress = False
@@ -238,21 +245,22 @@ class Navigator(Node):
             self.current_goal = None
             return
 
+        # If the goal has not been accepted, log and set the internal state
         self.get_logger().info('Goal accepted')
-
         self.goal_in_progress = True
         self.current_goal_handle = goal_handle
         self.current_goal = self.next_goal
 
+        # Asynchronously ask for navigation results
         self._get_result_future = goal_handle.get_result_async()
+
+        # Add callback to be executed when the results request has been served
         self._get_result_future.add_done_callback(self.get_result_callback)
 
     def get_result_callback(self, future):
         '''
-        This function sets the flag and logs depending on the navigation results
+        This function resets the node internal state when the navigation finishes
         '''
-        result = future.result().result
-        self.get_logger().info(f'Navigation finished with result: {result}')
         self.goal_in_progress = False
         self.current_goal_handle = None
         self.current_goal = None
@@ -279,9 +287,10 @@ class Navigator(Node):
 
     @staticmethod
     def normalize_angle(angle):
-        """Normalize an angle between -pi and +pi.
-        In this way, for instance, 359° will be close to 1°
-        """
+        '''
+        This function normalizes an angle between -pi and +pi.
+        For instance, in this way, 359° will be close to 1°
+        '''
         while angle > math.pi:
             angle -= 2.0 * math.pi
         while angle < -math.pi:
@@ -291,7 +300,6 @@ class Navigator(Node):
 
 
         
-
 def main(args=None):            
     rclpy.init(args=args)
     node = Navigator()
