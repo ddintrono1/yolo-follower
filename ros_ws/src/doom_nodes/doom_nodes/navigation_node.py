@@ -30,7 +30,6 @@ class Navigator(Node):
         self.robot_frame = 'base_link'
         self.global_frame = 'map'
         self.transform_timeout = rclpy.duration.Duration(seconds=0.5)
-        self.person_position_camera = None
 
         # Null point definition, utils
         self.null_point = PointStamped()
@@ -39,6 +38,7 @@ class Navigator(Node):
         self.null_point.point.z = 0.0
         
         # Node 'internal state'
+        self.person_position_camera = None
         self.goal_in_progress = False
         self.current_goal_handle = None
         self.current_goal = None
@@ -61,7 +61,13 @@ class Navigator(Node):
         
         self.timer = self.create_timer(1.0, self.navigate)
 
-        self.get_logger().info(f"Navigator node ready \n")         
+        self.get_logger().info(f"Navigator node ready \n")
+
+    def save_point(self, msg):
+        '''
+        This function saves the received target point. It's the subscriber callback
+        '''
+        self.person_position_camera = msg         
 
     def navigate(self):
 
@@ -165,7 +171,7 @@ class Navigator(Node):
     def compute_goal(self, robot_position, target_position):
         '''
         This function computes the goal pose and the distance based on the robot starting position
-        and target position
+        and target position, so that the robot will face the target
         '''
         robot_x = robot_position.point.x
         robot_y = robot_position.point.y
@@ -188,12 +194,6 @@ class Navigator(Node):
         goal_pose.header.stamp = self.get_clock().now().to_msg()
 
         return goal_pose, goal_distance        
-
-    def save_point(self, msg):
-        '''
-        This function saves the received target point. It's the subscriber callback
-        '''
-        self.person_position_camera = msg
 
     def goal_canceled_callback(self, future):
         '''

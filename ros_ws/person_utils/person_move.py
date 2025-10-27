@@ -11,7 +11,6 @@ def move(x, y, z, steps, rate):
     dy = (y - y_start) / steps
     dz = (z - z_start) / steps
 
-
     for i in range(steps):
         req = f'name: "my_person", position: {{x: {x_start + dx*(i+1)}, y: {y_start + dy*(i+1)}, z: {z_start + dz*(i+1)}}}'
         subprocess.run([
